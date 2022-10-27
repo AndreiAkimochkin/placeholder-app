@@ -1,0 +1,24 @@
+
+.item {
+    border: 2px solid teal;
+    width: 790px;
+    align-content: center;
+    margin-left: 100px;
+    padding-left: 10px;
+}
+
+.select {
+    border: 2px solid teal;
+    padding-top: 20px;
+    padding-left: 10px;
+    padding-bottom: 200px;
+    width: 790px;
+    align-content: center;
+    margin-left: 100px;   ;
+}
+
+.loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

@@ -1,0 +1,14 @@
+
+.footer{
+    border: 2px solid teal;
+    width: 800px;
+    align-content: center;
+    margin-left: 100px;
+}
+
+.title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
