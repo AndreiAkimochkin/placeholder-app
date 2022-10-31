@@ -4,8 +4,11 @@ export type PostType = {
     "title": string,
     "body": string
 }
+
 export type PostArrayType ={
-    all_posts:PostType[]
+    all_posts:PostType[],
+    isLoading: boolean,
+    error: boolean,
 }
 
 

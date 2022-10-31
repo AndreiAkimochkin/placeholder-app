@@ -1,7 +1,7 @@
 import { useAppDispatch,useAppSelector } from "../../hooks/redux-hooks";
 import {ChangeEvent, useEffect, useState} from 'react'
 import './Post.css'
-import {PostType} from "../../models/redux-models";
+import {PostType, UsersType} from "../../models/redux-models";
 import {fetchUsers} from "../../store/user-actions";
 import {fetchPosts} from "../../store/post-actions";
 
@@ -11,14 +11,19 @@ const Post=()=>{
     const dispatch=useAppDispatch();
     const allPosts=useAppSelector(state=>state.post.all_posts);
     const allUsers= useAppSelector(state=>state.user.all_users);
+    const error = useAppSelector(state => state.post.error);
+    const isLoading = useAppSelector(state => state.post.isLoading);
+
+
 
     useEffect(()=> {
-        dispatch(fetchPosts())
+           dispatch(fetchPosts())
     },[dispatch])
 
     useEffect(()=> {
         dispatch(fetchUsers())
     },[dispatch])
+
 
       const checkTodo=():boolean=>{
         return allPosts.length != 0;
@@ -43,17 +48,19 @@ const Post=()=>{
         setFilterByAuthor(null)
     }
 
+    if (isLoading) return <div className='loading'>Posts are loading...</div>
+    if (error) return <div>{error}</div>
+
     return(
         <>
             <div className='select'>
-
                 {filterBy === 'author' ?  <select
                     value={!filterByAuthor ? '' : filterByAuthor}
                     onChange={(e) => { setFilterByAuthor(+e.target.value)}
                 }>
                     <option disabled value="">Show posts from Author</option>
-                    {allUsers?.map((option: any) =>
-                        <option key={option.value} value={option.id}>
+                    {allUsers?.map((option: UsersType) =>
+                        <option key={option.name} value={option.id}>
                             {option.name}
                         </option>
                     )}
@@ -62,7 +69,7 @@ const Post=()=>{
                     onChange={(e) => { setFilterByTitle(e.target.value)}
                 }>
                     <option disabled value="">Show title from Post</option>
-                    {allPosts?.map((option: any) =>
+                    {allPosts?.map((option: PostType) =>
                         <option key={option.title} value={option.title}>
                             {option.title}
                         </option>
@@ -72,8 +79,8 @@ const Post=()=>{
                 <select value={filterBy}
                         onChange={chooseHandler}>
                     <option disabled value={''}>Show posts by</option>
-                    <option value={'title'}>title</option>
-                    <option value={'author'}>author</option>
+                    <option value={'title'}>Title</option>
+                    <option value={'author'}>Author</option>
                 </select>
             </div>
             <div>
